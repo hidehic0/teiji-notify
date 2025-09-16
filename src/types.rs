@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
 pub struct Task {
-    title: String,
-    time: String,
+    pub title: String,
+    pub time: String,
     #[serde(default)]
-    detail: Option<String>,
+    pub detail: Option<String>,
 }
