@@ -1,6 +1,9 @@
 mod load_config;
+mod parse_time;
 mod types;
 
+use crate::parse_time::parse_time;
+use chrono::Timelike;
 use clap::{Parser, Subcommand};
 use std::process;
 
@@ -33,7 +36,15 @@ fn main() {
             };
 
             for task in tasks {
-                println!("{} {}", task.title, task.time)
+                let time = match parse_time(task.time) {
+                    Ok(t) => t,
+                    Err(e) => {
+                        println!("{}", e);
+                        process::exit(1);
+                    }
+                };
+
+                println!("{} {}:{}", task.title, time.hour(), time.minute());
             }
         }
     }
